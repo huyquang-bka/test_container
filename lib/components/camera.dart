@@ -19,7 +19,28 @@ class CameraView extends StatelessWidget {
               children: [
                 for (int j = 0; j < 3; j++)
                   Expanded(
-                    child: EventCard(event: events[i * 3 + j + 1], title: title[i * 3 + j + 2].toString()),
+                    child: GestureDetector(
+                       //show Container in other window when clicked
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text("Event Details"),
+                              content: EventCard(event: events[i * 3 + j + 1], title: title[i * 3 + j + 2].toString()),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text("Close"),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      child: EventCard(event: events[i * 3 + j + 1], title: title[i * 3 + j + 2].toString())),
                   ),
               ],
             ),
